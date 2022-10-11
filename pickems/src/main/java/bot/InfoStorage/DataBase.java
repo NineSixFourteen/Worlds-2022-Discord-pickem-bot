@@ -1,22 +1,26 @@
 package bot.InfoStorage;
 
-import java.util.ArrayList;
+import java.util.TreeMap;
 
-public class DataBase {
+public class DataBase<X> {
 
-    private ArrayList<Row> Rows = new ArrayList<>();
+    private TreeMap<String,X> Rows;
 
-    public ArrayList<Row> getRows() {
+    public DataBase(){
+        Rows = new TreeMap<>();
+    }
+
+    public TreeMap<String,X> getRows() {
         return Rows;
     }
 
-    public void addRow(Row row){
-        Rows.add(row);
+    public void addRow(String id, X row){
+        Rows.put(id, row);
     }
 
     public void display(){
-        for(Row row : Rows){
-            row.display();
+        for(String key : Rows.keySet()){
+            System.out.println(key + Rows.get(key).toString());
         }
     }
     

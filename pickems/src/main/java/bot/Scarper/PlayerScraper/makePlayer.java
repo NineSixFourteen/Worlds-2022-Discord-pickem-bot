@@ -1,16 +1,16 @@
-package bot.Scarper;
+package bot.Scarper.PlayerScraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import bot.InfoStorage.DataBase;
-import bot.InfoStorage.PlayerRowBuilder;
-import bot.InfoStorage.Row;
+import bot.InfoStorage.Player.PlayerRow;
+import bot.InfoStorage.Player.PlayerRowBuilder;
 
 public class makePlayer {
     
-    public static DataBase makePlayerDB() throws IOException{
-        DataBase db = new DataBase();
+    public static DataBase<PlayerRow> makePlayerDB() throws IOException{
+        DataBase<PlayerRow> db = new DataBase<>();
         addRows("Top",db);
         addRows("Jungle",db);
         addRows("Mid",db);
@@ -19,7 +19,7 @@ public class makePlayer {
         return db;
     }
 
-    private static void addRows( String Pos, DataBase db){
+    private static void addRows( String Pos, DataBase<PlayerRow> db){
         String start 
           = "https://lol.fandom.com/wiki/Special:RunQuery/TournamentStatistics?TS%5Bpreload%5D=TournamentByPlayerRole&TS%5Brole%5D=";
         String end 
@@ -29,18 +29,17 @@ public class makePlayer {
             rows.remove(0);
             for(String row : rows){
                 String[] info = row.split(" ");
-                db.addRow(makeRow(info, Pos)); 
+                db.addRow(info[1], makeRow(info, Pos)); 
             }
         } catch(Exception e ){
             throw new Error("ERROR GETTING Player Data");
         }
     }
 
-    public static Row makeRow(String[] info, String Pos) {
-        int i = 1;
+    public static PlayerRow makeRow(String[] info, String Pos) {
+        int i = 2;
         PlayerRowBuilder builder = new PlayerRowBuilder();
         builder
-            .addName(info[i++])
             .addGamesPlayed(Integer.parseInt(info[i++]))
             .addWins(Integer.parseInt(info[i++]))
             .addLoses(Integer.parseInt(info[i++]))

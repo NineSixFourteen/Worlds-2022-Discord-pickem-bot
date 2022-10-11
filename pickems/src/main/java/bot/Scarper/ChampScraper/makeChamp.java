@@ -1,4 +1,4 @@
-package bot.Scarper;
+package bot.Scarper.ChampScraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-import bot.InfoStorage.ChampRowBuilder;
 import bot.InfoStorage.DataBase;
-import bot.InfoStorage.Row;
+import bot.InfoStorage.Champ.ChampRow;
+import bot.InfoStorage.Champ.ChampRowBuilder;
 
 public class makeChamp {
 
-    public static DataBase makeChampDB() throws IOException{
-        DataBase db = new DataBase();
+    public static DataBase<ChampRow> makeChampMainDB() throws IOException{
+        DataBase<ChampRow> db = new DataBase<>();
         String URL = "https://lol.fandom.com/wiki/2022_Season_World_Championship/Main_Event/Champion_Statistics";
         Document doc = Jsoup.connect(URL).get();
         Element result = doc.select(".wikitable ").first();
@@ -27,7 +27,26 @@ public class makeChamp {
             }
         }
         for(ArrayList<String> champ : champsStats){
-            db.addRow(makeRow(champ));
+            String name = champ.remove(0);
+            db.addRow(name, makeRow(champ));
+        }
+        return db;
+    }
+
+    public static DataBase<ChampRow> makeChampPlayInDB() throws IOException{
+        DataBase<ChampRow> db = new DataBase<>();
+        String URL = "https://lol.fandom.com/wiki/2022_Season_World_Championship/Play-In/Champion_Statistics";
+        Document doc = Jsoup.connect(URL).get();
+        Element result = doc.select(".wikitable ").first();
+        ArrayList<ArrayList<String>> champsStats = new ArrayList<>(); 
+        if(result != null){
+            for(int i = 4; i < result.childNode(0).childNodeSize();i++){
+                champsStats.add(getChamp(result, i));
+            }
+        }
+        for(ArrayList<String> champ : champsStats){
+            String name = champ.remove(0);
+            db.addRow(name, makeRow(champ));
         }
         return db;
     }
@@ -62,7 +81,7 @@ public class makeChamp {
         String pos = " "; 
         for(Node node : nodes.get(20).childNodes()){
             try{
-                pos += node.childNode(0).attributes().get("title") + "|";
+                pos += node.childNode(0).attributes().get("title") + ", ";
             } catch(Exception e){}
         }
         info.add(pos.substring(0, pos.length() - 1));
@@ -75,11 +94,9 @@ public class makeChamp {
         } 
     } 
 
-    private static Row makeRow(ArrayList<String> info) {
-        int i = 0;
+    private static ChampRow makeRow(ArrayList<String> info) {
+        int i = 1;
         ChampRowBuilder builder = new ChampRowBuilder();
-        builder
-         .addName( info.get(i++) );i++;
          builder
          .addPresence( info.get(i++) )
          .addBans( parseInt(info.get(i++)) )

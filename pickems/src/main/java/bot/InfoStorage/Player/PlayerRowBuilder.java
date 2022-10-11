@@ -1,4 +1,4 @@
-package bot.InfoStorage;
+package bot.InfoStorage.Player;
 
 public class PlayerRowBuilder {
 
@@ -6,11 +6,6 @@ public class PlayerRowBuilder {
 
     public PlayerRowBuilder(){
         row = new PlayerRow();
-    }
-
-    public PlayerRowBuilder addName(String name){
-        row.setName(name);
-        return this;
     }
 
     public PlayerRowBuilder addGamesPlayed(int gp){

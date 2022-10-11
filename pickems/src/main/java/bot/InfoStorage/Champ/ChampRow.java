@@ -1,8 +1,8 @@
-package bot.InfoStorage;
+package bot.InfoStorage.Champ;
 
-public class ChampRow implements Row{
+public class ChampRow{
 
-    private String Name;
+    //Fields
     private String Presence;
     private int Baned;
     private int GamesPlayed;
@@ -21,12 +21,8 @@ public class ChampRow implements Row{
     private String KShare;
     private String GShare;
     private String PosPlayed;
-    public String getName() {
-        return Name;
-    }
-    public void setName(String name) {
-        Name = name;
-    }
+
+    //Getter and Setters 
     public String getPresence() {
         return Presence;
     }
@@ -135,10 +131,17 @@ public class ChampRow implements Row{
     public void setPosPlayed(String posPlayed) {
         PosPlayed = posPlayed;
     }
+
+    //Other Functions :)
     @Override
-    public void display() {
-        System.out.println(this.Name + " has " + this.Presence + " Presence" );
+    public String toString() {
+        return " has " + this.Presence + " Presence " + " Played : " + this.GamesPlayed + " Banned : " + this.Baned + " Pos Played :" + this.PosPlayed ;
+    }
+    public float lookup(String Field){
+        return new CStatsLookup(this).lookup(Field);
+    }
+    public float lookupID(int ID){
+        return new CStatsLookup(this).lookupID(ID);
     }
 
-    
 }

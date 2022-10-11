@@ -1,4 +1,4 @@
-package bot.InfoStorage;
+package bot.InfoStorage.Champ;
 
 public class ChampRowBuilder {
 
@@ -8,10 +8,6 @@ public class ChampRowBuilder {
         row = new ChampRow();
     }
 
-    public ChampRowBuilder addName(String name){
-        row.setName(name);
-        return this;
-    }
     public ChampRowBuilder addPresence(String presence){
         row.setPresence(presence);
         return this;

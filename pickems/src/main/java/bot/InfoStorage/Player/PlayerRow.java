@@ -1,8 +1,7 @@
-package bot.InfoStorage;
+package bot.InfoStorage.Player;
 
-public class PlayerRow implements Row {
+public class PlayerRow {
 
-    private String Name; 
     private int GamesPlayed;
     private int Wins;
     private int Loses;
@@ -32,12 +31,6 @@ public class PlayerRow implements Row {
     }
     public void setPos(String pos) {
         Pos = pos;
-    }
-    public String getName() {
-        return Name;
-    }
-    public void setName(String name) {
-        Name = name;
     }
     public int getGamesPlayed() {
         return GamesPlayed;
@@ -130,10 +123,13 @@ public class PlayerRow implements Row {
         this.champsPlayed = champsPlayed;
     }
     @Override
-    public void display() {
-        System.out.println(this.Name + " has played " + this.GamesPlayed + " games.");
-        
+    public String toString() {
+        return " | " + this.GamesPlayed + " | " + this.Wins + " | "  ;
     }
+    public float lookupID(int id){
+        return new PStatsLookup(this).lookupID(id);
+    }
+
 
 
 

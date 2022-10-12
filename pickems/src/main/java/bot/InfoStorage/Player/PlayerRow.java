@@ -17,9 +17,23 @@ public class PlayerRow {
     private String killPar;
     private String killShare;
     private String goldShare;
-    private int champsPlayed;
+    private String champsPlayed;
     private String Pos; 
+    private int firstBlood;
+    private String team;
     
+    public String getTeam() {
+        return team;
+    }
+    public void setTeam(String team) {
+        this.team = team;
+    }
+    public int getFirstBlood() {
+        return firstBlood;
+    }
+    public void setFirstBlood(int firstBlood) {
+        this.firstBlood = firstBlood;
+    }
     public int getAssists() {
         return Assists;
     }
@@ -116,15 +130,15 @@ public class PlayerRow {
     public void setGoldShare(String goldShare) {
         this.goldShare = goldShare;
     }
-    public int getChampsPlayed() {
+    public String getChampsPlayed() {
         return champsPlayed;
     }
-    public void setChampsPlayed(int champsPlayed) {
+    public void setChampsPlayed(String champsPlayed) {
         this.champsPlayed = champsPlayed;
     }
     @Override
     public String toString() {
-        return " | " + this.GamesPlayed + " | " + this.Wins + " | "  ;
+        return " | " + this.GamesPlayed + " | " + this.Wins + " | "  + this.champsPlayed + " | " + this.firstBlood + " | " + this.team ;
     }
     public float lookupID(int id){
         return new PStatsLookup(this).lookupID(id);

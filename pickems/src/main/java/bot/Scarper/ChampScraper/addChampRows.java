@@ -15,8 +15,7 @@ public class addChampRows {
         DataBase<ChampRow> playin = makeChamp.makeChampPlayInDB();
         DataBase<ChampRow> main = makeChamp.makeChampMainDB();
         DataBase<ChampRow> add = add(playin, main); 
-        //add.display();
-        SortChamps.Sort(add, "pos");
+        SortChamps.Sort(add, "GP");
     }
 
     public static DataBase<ChampRow> add(DataBase<ChampRow> data1, DataBase<ChampRow> data2){
@@ -131,9 +130,6 @@ public class addChampRows {
         int played = row.getGamesPlayed() + row1.getGamesPlayed() ;
         if(totalGames!= 0) {
             float prec = (banned + played) / totalGames;
-            //System.out.println("B: " + (banned + played));
-            //System.out.println("T: " + totalGames);
-            //System.out.println("P: " + prec);
             return Math.round(prec * 100) + "%";
         }else{
             return "0%";

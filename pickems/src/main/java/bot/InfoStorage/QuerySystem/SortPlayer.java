@@ -1,19 +1,13 @@
 package bot.InfoStorage.QuerySystem;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Player.PlayerRow;
-import bot.Scarper.PlayerScraper.makePlayer;
 
 public class SortPlayer {
 
-    public static void main(String[] args) throws IOException {
-        DataBase<PlayerRow> db = makePlayer.makePlayerDB();
-        Sort(db,5);
-    }
 
     public static void Sort(DataBase<PlayerRow> champs,int id){
         ArrayList<Pair> pairs = new ArrayList<>();

@@ -87,7 +87,7 @@ public class PlayerRowBuilder {
         return this;
     }
 
-    public PlayerRowBuilder addChampsPlayed(int ChampsPlayed){
+    public PlayerRowBuilder addChampsPlayed(String ChampsPlayed){
         row.setChampsPlayed(ChampsPlayed);
         return this;
     }
@@ -97,8 +97,18 @@ public class PlayerRowBuilder {
         return this;
     }
 
+    public PlayerRowBuilder addFirstBlood(int fb){
+        row.setFirstBlood(fb);
+        return this;
+    }
+
     public PlayerRow build(){
         return row;
+    }
+
+    public PlayerRowBuilder addTeam(String team) {
+        row.setTeam(team);
+        return this;
     }
     
 

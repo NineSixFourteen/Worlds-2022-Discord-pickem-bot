@@ -31,6 +31,7 @@ public class SortChamps {
         }
     }
 
+    
     public static void Sort(DataBase<ChampRow> champs,String mes){
         ArrayList<Pair> pairs = new ArrayList<>();
         for(String key : champs.getRows().keySet()){
@@ -44,6 +45,23 @@ public class SortChamps {
         for(Pair pair : pairs){
             System.out.println(pair.getID() + " | " + pair.getValue());
         }
+    }
+
+    public static String SortTM(DataBase<ChampRow> champs,String mes){
+        ArrayList<Pair> pairs = new ArrayList<>();
+        for(String key : champs.getRows().keySet()){
+            pairs.add(
+                new Pair(
+                    key, 
+                    champs.getRows().get(key).lookup(mes)
+                ));
+        }
+        Collections.sort(pairs);
+        String message = "";
+        for(Pair pair : pairs){
+            message += pair.getID() + " | " + pair.getValue() + "\n";
+        }
+        return message;
     }
 
 }

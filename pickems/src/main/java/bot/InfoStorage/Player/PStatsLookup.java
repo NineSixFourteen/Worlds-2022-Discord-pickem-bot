@@ -80,7 +80,7 @@ public class PStatsLookup {
             case 14: 
                 return Converters.removePer(player.getGoldShare());
             case 15: 
-                return player.getChampsPlayed();
+                return player.getChampsPlayed().split(",").length;
             case 16:
                 switch(player.getPos()){
                     case "Top": return 1; 

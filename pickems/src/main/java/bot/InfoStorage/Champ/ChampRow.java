@@ -133,15 +133,20 @@ public class ChampRow{
     }
 
     //Other Functions :)
-    @Override
-    public String toString() {
-        return " has " + this.Presence + " Presence " + " Played : " + this.GamesPlayed + " Banned : " + this.Baned + " Pos Played :" + this.PosPlayed ;
-    }
+
     public float lookup(String Field){
         return new CStatsLookup(this).lookup(Field);
     }
     public float lookupID(int ID){
         return new CStatsLookup(this).lookupID(ID);
+    }
+    @Override
+    public String toString() {
+        return "ChampRow [Presence=" + Presence + ", Baned=" + Baned + ", GamesPlayed=" + GamesPlayed + ", wins=" + wins
+                + ", loses=" + loses + ", WinRate=" + WinRate + ", AvgKills=" + AvgKills + ", AvgDeaths=" + AvgDeaths
+                + ", AvgAssists=" + AvgAssists + ", Kda=" + Kda + ", AvgCs=" + AvgCs + ", Cspm=" + Cspm + ", Gold="
+                + Gold + ", GPM=" + GPM + ", KPar=" + KPar + ", KShare=" + KShare + ", GShare=" + GShare
+                + ", PosPlayed=" + PosPlayed + "]";
     }
 
 }

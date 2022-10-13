@@ -143,12 +143,16 @@ public class PlayerRow {
     public void setChampsPlayed(String champsPlayed) {
         this.champsPlayed = champsPlayed;
     }
-    @Override
-    public String toString() {
-        return " | " + this.GamesPlayed + " | " + this.Wins + " | "  + this.champsPlayed + " | " + this.firstBlood + " | " + this.team + " | " + this.name;
-    }
     public float lookupID(int id){
         return new PStatsLookup(this).lookupID(id);
+    }
+    @Override
+    public String toString() {
+        return "PlayerRow [name=" + name + ", GamesPlayed=" + GamesPlayed + ", Wins=" + Wins + ", Loses=" + Loses
+                + ", WinRate=" + WinRate + ", Kills=" + Kills + ", deaths=" + deaths + ", Assists=" + Assists + ", kda="
+                + kda + ", cs=" + cs + ", cspm=" + cspm + ", gold=" + gold + ", goldpm=" + goldpm + ", killPar="
+                + killPar + ", killShare=" + killShare + ", goldShare=" + goldShare + ", champsPlayed=" + champsPlayed
+                + ", Pos=" + Pos + ", firstBlood=" + firstBlood + ", team=" + team + "]";
     }
 
 

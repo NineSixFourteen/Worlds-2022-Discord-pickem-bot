@@ -20,14 +20,27 @@ public class PlayerRowBuilder {
         row.setKills(Math.round(kpg * row.getGamesPlayed()));
         return this;
     }
+    public PlayerRowBuilder addKills(int kills){
+        //Scraped info is average kills I want total kills
+        row.setKills(kills);
+        return this;
+    }
     public PlayerRowBuilder addDeaths(float dpg){
         //Scraped info is average deaths I want total deaths
         row.setDeaths(Math.round(dpg * row.getGamesPlayed()));
         return this;
     }
+    public PlayerRowBuilder addDeaths(int deaths){
+        row.setDeaths(deaths);
+        return this;
+    }
     public PlayerRowBuilder addAssits(float apg){
         //Scraped info is average assists I want total assists
         row.setAssists(Math.round(apg * row.getGamesPlayed()));
+        return this;
+    }
+    public PlayerRowBuilder addAssits(int as){
+        row.setAssists(as);
         return this;
     }
     public PlayerRowBuilder addKda(float Kda){
@@ -46,11 +59,16 @@ public class PlayerRowBuilder {
         row.setWinRate(wr);
         return this;
     }
-    public PlayerRowBuilder addTotalCs(float Cs){
+    public PlayerRowBuilder addCs(float Cs){
         //Scraped info is average CS I want total CS
         row.setCs(Math.round(Cs * row.getGamesPlayed()));
         return this;
     }
+    public PlayerRowBuilder addCs(int cs){
+        row.setCs(cs);
+        return this;
+    }
+
     public PlayerRowBuilder addCSPM(float cspm){
         row.setCspm(cspm);
         return this;

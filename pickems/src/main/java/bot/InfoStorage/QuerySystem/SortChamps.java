@@ -47,6 +47,23 @@ public class SortChamps {
         }
     }
 
+    public static String SortTR(DataBase<ChampRow> champs,String mes){
+        ArrayList<Pair> pairs = new ArrayList<>();
+        for(String key : champs.getRows().keySet()){
+            pairs.add(
+                new Pair(
+                    key, 
+                    champs.getRows().get(key).lookup(mes)
+                ));
+        }
+        Collections.sort(pairs);
+        String message = "";
+        for(Pair pair : pairs){
+            message += pair.getID() + " | " + pair.getValue() + "\n";
+        }
+        return message;
+    }
+
     public static String SortTM(DataBase<ChampRow> champs,String mes){
         ArrayList<Pair> pairs = new ArrayList<>();
         for(String key : champs.getRows().keySet()){
@@ -62,6 +79,26 @@ public class SortChamps {
             message += pair.getID() + " | " + pair.getValue() + "\n";
         }
         return message;
+    }
+
+    public static String[][] SortTL(DataBase<ChampRow> champs, String mes) {
+        ArrayList<Pair> pairs = new ArrayList<>();
+        for(String key : champs.getRows().keySet()){
+            pairs.add(
+                new Pair(
+                    key, 
+                    champs.getRows().get(key).lookup(mes)
+                ));
+        }
+        Collections.sort(pairs);
+        String[][] arr = new String[2][pairs.size()];
+        for(int i = 0;i <pairs.size();i++){
+            arr[0][i] = pairs.get(i).getID();
+            arr[1][i] = pairs.get(i).getValue() + "";
+        }
+        return arr;
+        
+        
     }
 
 }

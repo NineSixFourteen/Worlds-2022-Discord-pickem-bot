@@ -15,6 +15,12 @@ import bot.InfoStorage.Champ.ChampRowBuilder;
 
 public class MakeChamp {
 
+    public static DataBase<ChampRow> makeChampDB() throws IOException{
+        return AddChampRows.add(makeChampMainDB(), makeChampPlayInDB());
+
+    }
+
+
     public static DataBase<ChampRow> makeChampMainDB() throws IOException{
         DataBase<ChampRow> db = new DataBase<>();
         String URL = "https://lol.fandom.com/wiki/2022_Season_World_Championship/Main_Event/Champion_Statistics";

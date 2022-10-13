@@ -25,20 +25,26 @@ public class AddPlayerRow {
     }
 
     private static PlayerRow addRows(PlayerRow row, PlayerRow row1) {
+        if(row.getWins() == 3 && row.getKda() < 5){
+            System.out.println(row1.getKills());
+            System.out.println(row.getKills());
+            System.out.println(row.getKills() + row1.getKills());
+        }
+        int gp = row.getGamesPlayed() + row1.getGamesPlayed();
         PlayerRowBuilder prb = new PlayerRowBuilder();
         prb
          .addName(row.getName())
-         .addGamesPlayed(row.getGamesPlayed() + row1.getGamesPlayed())
+         .addGamesPlayed(gp)
          .addWins(row.getWins() + row1.getWins())
          .addLoses(row.getLoses() + row1.getLoses())
          .addWinrate(
-            (0.0 + row.getWins() + row1.getWins())
-            / (row.getLoses() + row1.getLoses()) + "%")
+            ((0.0 + row.getWins() + row1.getWins())
+            / (row.getGamesPlayed() + row1.getGamesPlayed()) * 100) + "%")
          .addKills(row.getKills() + row1.getKills())
-         .addDeaths(row.getDeaths() + row1.getDeaths())
+         .addDeaths(row.getDeaths() + row1.getDeaths()) 
          .addAssits(row.getAssists() + row1.getAssists())
          .addKda(getKda(row, row1))
-         .addTotalCs(row.getCs() + row1.getCs())
+         .addCs(row.getCs() + row1.getCs() / gp)
          .addCSPM(getCSPM(row,row1))
          .addGold(getGold(row,row1))
          .addGPM(getGPM(row,row1))
@@ -81,7 +87,7 @@ public class AddPlayerRow {
     private static String getGoldShare(PlayerRow row, PlayerRow row1) {
         float totalPlayIn = (1 / Converters.removePer(row.getGoldShare()) * 100) * Converters.removeK(row.getGold());
         float totalMain = (1 / Converters.removePer(row1.getGoldShare()) * 100) * Converters.removeK(row1.getGold());
-        return (Converters.removeK(row.getGold()) + Converters.removeK(row1.getGold()) / totalPlayIn + totalMain) + "%";
+        return ((Converters.removeK(row.getGold()) + Converters.removeK(row1.getGold()) ) / ( totalPlayIn + totalMain) *100 )+ "%";
     }
 
     private static String getKillShare(PlayerRow row, PlayerRow row1) {
@@ -89,7 +95,7 @@ public class AddPlayerRow {
         float kill2 = row1.getKills() ; 
         float totalPlayIn = (1 / Converters.removePer(row.getKillShare()) * 100) * kill1;
         float totalMain = (1 / Converters.removePer(row1.getKillShare()) * 100) * kill2;
-        return ((kill1 + kill2) / totalPlayIn + totalMain) + "%";
+        return ((kill1 + kill2) / (totalPlayIn + totalMain) *100)+ "%";
     }
 
     private static String getKillPar(PlayerRow row, PlayerRow row1) {
@@ -97,17 +103,17 @@ public class AddPlayerRow {
         float KA2 = (row1.getKills() + row1.getAssists());
         float totalPlayIn = (1 / Converters.removePer(row.getKillPar()) * 100) * KA1;
         float totalMain = (1 / Converters.removePer(row1.getKillPar()) * 100) * KA2;
-        return ((KA1 + KA2) / totalPlayIn + totalMain) + "%";
+        return ((KA1 + KA2) / (totalPlayIn + totalMain) * 100)+ "%";
     }
 
     private static String getGPM(PlayerRow row, PlayerRow row1) {
-        float minutes1 = row.getCs() / row.getCspm();
-        float minutes2 = row1.getCs() / row1.getCspm();
-        return  "" + (Converters.asFloat(row.getGoldpm())  + Converters.asFloat(row.getGoldpm())) / (minutes1 + minutes2);
+        float minutes1 = (Converters.removeK(row.getGold()) / (Converters.asFloat(row.getGoldpm())));
+        float minutes2 = (Converters.removeK(row1.getGold()) / (Converters.asFloat(row1.getGoldpm())));
+        return  "" + (Converters.removeK(row.getGold())  + Converters.removeK(row1.getGold())) / (minutes1 + minutes2);
     }
 
     private static String getGold(PlayerRow row, PlayerRow row1) {
-        return ((Converters.removeK(row.getGold()) + Converters.removeK(row.getGold())) / 1000 ) + "k";
+        return (( (Converters.removeK(row.getGold()) + Converters.removeK(row1.getGold())) ) ) + "k";
     }
 
     private static float getCSPM(PlayerRow row, PlayerRow row1) {

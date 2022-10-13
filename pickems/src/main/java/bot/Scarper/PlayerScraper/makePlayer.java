@@ -54,7 +54,7 @@ public class MakePlayer {
             .addDeaths(Float.parseFloat(info[i++]))
             .addAssits(Float.parseFloat(info[i++]))
             .addKda(Float.parseFloat(info[i++]))
-            .addTotalCs(Float.parseFloat(info[i++]))
+            .addCs(Float.parseFloat(info[i++]))
             .addCSPM(Float.parseFloat(info[i++]))
             .addGold(info[i++])
             .addGPM(info[i++])

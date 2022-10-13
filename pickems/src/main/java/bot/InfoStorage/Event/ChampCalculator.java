@@ -6,20 +6,15 @@ import java.util.Set;
 
 import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Player.PlayerRow;
-import bot.Scarper.PlayerScraper.PlayerScraper;
 
 public class ChampCalculator {
 
-    public static void main(String[] args) {
-        System.out.println(getMostUniqueChamps(PlayerScraper.getPlayers().get(2)));
+
+    public static String getMostUniqueChamps(DataBase<PlayerRow> db){
+        return getMostUniqueChampsHelper(db);
     }
 
-    public static EventData getEventData(DataBase<PlayerRow> db){
-        String team = getMostUniqueChamps(db);
-        return null;
-    }
-
-    private static String getMostUniqueChamps(DataBase<PlayerRow> db) {
+    private static String getMostUniqueChampsHelper(DataBase<PlayerRow> db) {
         HashMap<String,Set<String>> teamsAndChamps = new HashMap<>();
         for(String key : db.getRows().keySet()){
             PlayerRow player = db.get(key);

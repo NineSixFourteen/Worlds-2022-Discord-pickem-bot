@@ -7,7 +7,7 @@ import java.util.Collections;
 import bot.InfoStorage.DataBase;
 
 import bot.InfoStorage.Champ.ChampRow;
-import bot.Scarper.ChampScraper.MakeChamp;
+import bot.Scraper.ChampScraper.MakeChamp;
 
 public class SortChamps {
 

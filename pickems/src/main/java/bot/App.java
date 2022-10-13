@@ -2,19 +2,9 @@ package bot;
 
 import java.io.IOException;
 
+import bot.Scraper.EventScraper.makeEvent;
+import bot.Scraper.PlayerScraper.MakePlayer;
 
-
-import bot.InfoStorage.QuerySystem.SortChamps;
-import bot.InfoStorage.QuerySystem.SortPlayer;
-import bot.Scarper.ChampScraper.MakeChamp;
-import bot.Scarper.PlayerScraper.MakePlayer;
-import bot.Scarper.PlayerScraper.PlayerScraper;
-import dnl.utils.text.table.TextTable;
-
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args ) throws IOException
@@ -27,6 +17,7 @@ public class App
            );
            tt.printTable();                                                    
            */
-        System.out.println("Ming: " + PlayerScraper.getPlayers().get(2).get("Ming").toString());
+        //System.out.println("Ming: " + MakePlayer.getPlayers().get(2).get("Ming").toString());
+        System.out.println(makeEvent.getMatchData(3));
     }
 }

@@ -1,4 +1,4 @@
-package bot.Scarper.ChampScraper;
+package bot.Scraper.ChampScraper;
 
 import java.io.IOException;
 import java.util.ArrayList;

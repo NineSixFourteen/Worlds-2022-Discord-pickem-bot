@@ -1,4 +1,4 @@
-package bot.Scarper.PlayerScraper;
+package bot.Scraper.PlayerScraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,20 @@ import bot.InfoStorage.Player.PlayerRow;
 import bot.InfoStorage.Player.PlayerRowBuilder;
 
 public class MakePlayer {
+
+    public static ArrayList<DataBase<PlayerRow>> getPlayers(){
+        try{
+            DataBase<PlayerRow> playIns = MakePlayer.makePlayerDB(0);
+            DataBase<PlayerRow> Main = MakePlayer.makePlayerDB(1);
+            ArrayList<DataBase<PlayerRow>> Databases = new ArrayList<>();
+            Databases.add(playIns);
+            Databases.add(Main);
+            Databases.add(AddPlayerRow.add(playIns, Main));
+            return Databases;
+        } catch(Exception e ){
+            return new ArrayList<>();
+        }
+    }
 
     public static DataBase<PlayerRow> makePlayerDB(int num) throws IOException{
         DataBase<PlayerRow> db = new DataBase<>();

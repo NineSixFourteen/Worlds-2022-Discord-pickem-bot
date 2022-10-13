@@ -1,4 +1,4 @@
-package bot.Scarper.PlayerScraper;
+package bot.Scraper.PlayerScraper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

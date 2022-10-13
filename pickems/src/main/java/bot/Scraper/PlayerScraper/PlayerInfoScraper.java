@@ -1,4 +1,4 @@
-package bot.Scarper.PlayerScraper;
+package bot.Scraper.PlayerScraper;
 
 import java.io.BufferedReader;
 import java.io.IOException;

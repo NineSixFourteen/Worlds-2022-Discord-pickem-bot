@@ -1,6 +1,5 @@
-package bot.Scarper.EventScraper;
+package bot.Scraper.EventScraper;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import org.apache.commons.lang.text.StrBuilder;
@@ -13,10 +12,10 @@ public class EventScraper {
 
     private static Document doc1;
     private static Document doc2;
+    private static String mainURL = "https://gol.gg/tournament/tournament-stats/World%20Championship%202022/";
+    private static String playinURL = "https://gol.gg/tournament/tournament-stats/World%20Championship%20Play-In%202022/";
 
     public EventScraper(){
-        String mainURL = "https://gol.gg/tournament/tournament-stats/World%20Championship%202022/";
-        String playinURL = "https://gol.gg/tournament/tournament-stats/World%20Championship%20Play-In%202022/";
         try {
             doc1 = Jsoup.connect(mainURL).get();
             doc2 = Jsoup.connect(playinURL).get();
@@ -25,13 +24,13 @@ public class EventScraper {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        doc1 = Jsoup.connect("https://gol.gg/tournament/tournament-stats/World%20Championship%202022/").get();
-        System.out.println(getLongestTime());
-    }
-
-    public static String getLongestTime(){
-        Element result = doc1.select(".p-4 ").first();
+    public String getLongestTime(int num){
+        Element result;
+        if(num == 0 ){
+            result = doc1.select(".p-4 ").first();
+        } else {
+            result = doc2.select(".p-4 ").first();
+        }
         if(result != null){
             Node node = result.childNode(1).childNode(1)
             .childNode(1).childNode(1)
@@ -41,18 +40,44 @@ public class EventScraper {
         return "0:00:FUCK ALL"; 
     }
 
-    public static HashMap<String,Integer> getDrake(){
-        Element result = doc1.select(".p-4 ").first();
-        Node node = result
-            .childNode(1).childNode(3)
-            .childNode(5).childNode(1)
-            .childNode(5).childNode(1)
-            .childNode(0).childNode(1)
-            .childNode(0);
-        return parseDrakeData(node.toString());
+    public String getMostKills(int num){
+        Element result;
+        if(num == 0 ){
+            result = doc1.select(".p-4 ").first();
+        } else {
+            result = doc2.select(".p-4 ").first();
+        }
+        if(result != null){
+            String player = result.childNode(1).childNode(5)
+            .childNode(3).childNode(1).childNode(5)
+            .childNode(1).childNode(0).childNode(2).childNode(0).toString();
+            String kills = result.childNode(1).childNode(5)
+            .childNode(3).childNode(1).childNode(5)
+            .childNode(1).childNode(2).childNode(0).toString();
+            kills = kills.substring(0, kills.length() - 1);
+            return player + ": " + kills;
+        }
+        return "0:00:FUCK ALL"; 
     }
 
-
+    public HashMap<String,Integer> getDrake(int num){
+        Element result;
+        if(num == 0 ){
+            result = doc1.select(".p-4 ").first();
+        } else {
+            result = doc2.select(".p-4 ").first();
+        }
+        if(result != null){
+            Node node = result
+                .childNode(1).childNode(3)
+                .childNode(5).childNode(1)
+                .childNode(5).childNode(1)
+                .childNode(0).childNode(1)
+                .childNode(0);
+            return parseDrakeData(node.toString());
+        }
+        return new HashMap<>();
+    }
 
     private static HashMap<String, Integer> parseDrakeData(String drakeData) {
         StrBuilder sb = new StrBuilder(drakeData);

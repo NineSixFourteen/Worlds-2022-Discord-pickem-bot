@@ -1,4 +1,4 @@
-package bot.Scarper.PlayerScraper;
+package bot.Scraper.PlayerScraper;
 
 import java.util.HashSet;
 import bot.InfoStorage.Converters;

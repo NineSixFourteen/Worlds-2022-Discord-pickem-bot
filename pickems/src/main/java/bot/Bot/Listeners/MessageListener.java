@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Champ.ChampRow;
 import bot.InfoStorage.QuerySystem.SortChamps;
-import bot.Scarper.ChampScraper.AddChampRows;
-import bot.Scarper.ChampScraper.MakeChamp;
+import bot.Scraper.ChampScraper.AddChampRows;
+import bot.Scraper.ChampScraper.MakeChamp;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 

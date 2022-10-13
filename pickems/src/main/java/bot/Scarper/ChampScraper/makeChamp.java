@@ -13,7 +13,7 @@ import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Champ.ChampRow;
 import bot.InfoStorage.Champ.ChampRowBuilder;
 
-public class makeChamp {
+public class MakeChamp {
 
     public static DataBase<ChampRow> makeChampMainDB() throws IOException{
         DataBase<ChampRow> db = new DataBase<>();

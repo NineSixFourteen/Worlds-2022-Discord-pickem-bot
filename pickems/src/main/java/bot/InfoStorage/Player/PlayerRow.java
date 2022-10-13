@@ -2,6 +2,7 @@ package bot.InfoStorage.Player;
 
 public class PlayerRow {
 
+    private String name;
     private int GamesPlayed;
     private int Wins;
     private int Loses;
@@ -21,7 +22,13 @@ public class PlayerRow {
     private String Pos; 
     private int firstBlood;
     private String team;
-    
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getTeam() {
         return team;
     }
@@ -138,7 +145,7 @@ public class PlayerRow {
     }
     @Override
     public String toString() {
-        return " | " + this.GamesPlayed + " | " + this.Wins + " | "  + this.champsPlayed + " | " + this.firstBlood + " | " + this.team ;
+        return " | " + this.GamesPlayed + " | " + this.Wins + " | "  + this.champsPlayed + " | " + this.firstBlood + " | " + this.team + " | " + this.name;
     }
     public float lookupID(int id){
         return new PStatsLookup(this).lookupID(id);

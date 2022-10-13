@@ -51,6 +51,8 @@ public class PStatsLookup {
 
     public float lookupID(int id){
         switch(id){
+            case 0:
+                return player.getName().charAt(0);
             case 1: 
                 return player.getGamesPlayed();
             case 2: 

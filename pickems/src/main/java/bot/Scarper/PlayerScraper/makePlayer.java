@@ -8,53 +8,30 @@ import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Player.PlayerRow;
 import bot.InfoStorage.Player.PlayerRowBuilder;
 
-public class makePlayer {
+public class MakePlayer {
 
-    public static void main(String[] args) throws IOException {
-        //DataBase<PlayerRow> db = makePlayerMainDB();
-        //db.display();
-        DataBase<PlayerRow> db2 = makePlayerPlayInDB();
-        db2.display();
-    }
-    
-    public static DataBase<PlayerRow> makePlayerMainDB() throws IOException{
+    public static DataBase<PlayerRow> makePlayerDB(int num) throws IOException{
         DataBase<PlayerRow> db = new DataBase<>();
-        addRows("Top",db);
-        addRows("Jungle",db);
-        addRows("Mid",db);
-        addRows("Bot",db);
-        addRows("Support",db);
+        createRows(db, num);
         return db;
     }
 
-    public static DataBase<PlayerRow> makePlayerPlayInDB() throws IOException{
-        DataBase<PlayerRow> db = new DataBase<>();
-        addRows2("Top",db);
-        addRows2("Jungle",db);
-        addRows2("Mid",db);
-        addRows2("Bot",db);
-        addRows2("Support",db);
-        return db;
-    }
-
-
-    private static void addRows( String Pos, DataBase<PlayerRow> db){
-        String start 
-          = "https://lol.fandom.com/wiki/Special:RunQuery/TournamentStatistics?TS%5Bpreload%5D=TournamentByPlayerRole&TS%5Brole%5D=";
-        String end 
-          = "&TS[tournament]=2022+Season+World+Championship%2FMain+Event&_run=";
+    private static void createRows(DataBase<PlayerRow> db, int num){
+        String[] URLS = new String[]{
+            "https://lol.fandom.com/wiki/2022_Season_World_Championship/Main_Event/Player_Statistics",
+            "https://lol.fandom.com/wiki/2022_Season_World_Championship/Play-In/Player_Statistics"
+        };
         try {
-            ArrayList<String> rows = PlayerScraper.getPlayerData(start + Pos + end);
-            HashMap<String,String> champs = PlayerScraper.getPlayerPicks();
-            HashMap<String,playerInfo> pInfo = PlayerScraper.getPlayerInfo();
+            ArrayList<String> rows = GameDataScraper.getPlayerData(URLS[num]);
+            HashMap<String,PlayerInfo> pInfo = PlayerInfoScraper.getPlayerInfo();
+            HashMap<String,String> champs = PlayerPicksScraper.getPlayerPicks();
             rows.remove(0);
             for(String row : rows){
                 String[] info = row.split(" ");
                 if(pInfo.get(info[1].toLowerCase()) == null){
-                    System.out.println(info[1]);
-                    db.addRow(info[1], makeRow(info, Pos, champs.get(info[1]), new playerInfo(0, "-")));
+                    db.addRow(info[1], makeRow(info, champs.get(info[1]), new PlayerInfo(0,"nameless one", "-","Worthless")));
                 } else {
-                    db.addRow(info[1], makeRow(info, Pos,champs.get(info[1]), pInfo.get(info[1].toLowerCase()))); 
+                    db.addRow(info[1], makeRow(info, champs.get(info[1].toLowerCase()), pInfo.get(info[1].toLowerCase()))); 
                 }
             }
 
@@ -64,36 +41,11 @@ public class makePlayer {
         }
     }
 
-    private static void addRows2( String Pos, DataBase<PlayerRow> db){
-        String start 
-          = "https://lol.fandom.com/wiki/Special:RunQuery/TournamentStatistics?TS%5Bpreload%5D=TournamentByPlayerRole&TS%5Brole%5D=";
-        String end 
-          = "&TS[tournament]=2022+Season+World+Championship%2FPlay-In&_run=";
-        try {
-            ArrayList<String> rows = PlayerScraper.getPlayerData(start + Pos + end);
-            HashMap<String,String> champs = PlayerScraper.getPlayerPicksPL();
-            HashMap<String,playerInfo> pInfo = PlayerScraper.getPlayerInfo();
-            rows.remove(0);
-            for(String row : rows){
-                String[] info = row.split(" ");
-                if(pInfo.get(info[1].toLowerCase()) == null){
-                    System.out.println(info[1]);
-                    db.addRow(info[1], makeRow(info, Pos, champs.get(info[1]), new playerInfo(-1, "-")));
-                } else {
-                    db.addRow(info[1], makeRow(info, Pos,champs.get(info[1]), pInfo.get(info[1].toLowerCase()))); 
-                }
-            }
-
-        } catch(Exception e ){
-            e.printStackTrace();
-            throw new Error("ERROR GETTING Player Data");
-        }
-    }
-
-    public static PlayerRow makeRow(String[] info, String Pos, String champs, playerInfo pi) {
+    public static PlayerRow makeRow(String[] info, String champs, PlayerInfo pi) {
         int i = 2;
         PlayerRowBuilder builder = new PlayerRowBuilder();
         builder
+            .addName(pi.getName())
             .addGamesPlayed(Integer.parseInt(info[i++]))
             .addWins(Integer.parseInt(info[i++]))
             .addLoses(Integer.parseInt(info[i++]))
@@ -110,7 +62,7 @@ public class makePlayer {
             .addKillShare(info[i++])
             .addGoldShare(info[i++])
             .addChampsPlayed(champs)
-            .setPos(Pos)
+            .setPos(pi.getPosition())
             .addFirstBlood(pi.getFb())
             .addTeam(pi.getTeam());
         return builder.build();

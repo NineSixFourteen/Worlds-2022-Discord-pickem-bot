@@ -1,22 +1,12 @@
 package bot.Scarper.PlayerScraper;
 
-import java.io.IOException;
 import java.util.HashSet;
-
 import bot.InfoStorage.Converters;
 import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Player.PlayerRow;
 import bot.InfoStorage.Player.PlayerRowBuilder;
-import bot.InfoStorage.QuerySystem.SortPlayer;
 
 public class AddPlayerRow {
-    public static void main(String[] args) throws IOException{
-        DataBase<PlayerRow> playin = makePlayer.makePlayerPlayInDB();
-        DataBase<PlayerRow> main = makePlayer.makePlayerMainDB();
-        DataBase<PlayerRow> add = add(playin, main); 
-        //add.display();
-        SortPlayer.Sort(add, 15);
-    }
 
     public static DataBase<PlayerRow> add(DataBase<PlayerRow> data1, DataBase<PlayerRow> data2){
         for(String key : data2.getRows().keySet()){
@@ -37,6 +27,7 @@ public class AddPlayerRow {
     private static PlayerRow addRows(PlayerRow row, PlayerRow row1) {
         PlayerRowBuilder prb = new PlayerRowBuilder();
         prb
+         .addName(row.getName())
          .addGamesPlayed(row.getGamesPlayed() + row1.getGamesPlayed())
          .addWins(row.getWins() + row1.getWins())
          .addLoses(row.getLoses() + row1.getLoses())

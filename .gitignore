@@ -1,3 +1,8 @@
 
 pickems/src/main/java/bot/Token.java
 *.class
+pickems/target/classes/bot/Scarper/ChampScraper/makeChamp.class
+pickems/target/classes/bot/Scarper/dob.class
+pickems/target/classes/bot/Scarper/PlayerScraper/makePlayer.class
+pickems/target/classes/bot/Scarper/PlayerScraper/PageGetter.class
+pickems/target/classes/bot/Bot/Listeners/MessageListener.class

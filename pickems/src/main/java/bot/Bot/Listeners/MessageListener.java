@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Champ.ChampRow;
 import bot.InfoStorage.QuerySystem.SortChamps;
-import bot.Scarper.ChampScraper.addChampRows;
-import bot.Scarper.ChampScraper.makeChamp;
+import bot.Scarper.ChampScraper.AddChampRows;
+import bot.Scarper.ChampScraper.MakeChamp;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -21,9 +21,9 @@ public class MessageListener extends ListenerAdapter
         if(event.getMessage().getContentDisplay().equals("!D")){
             DataBase<ChampRow> playin;
             try {
-                playin = makeChamp.makeChampPlayInDB();
-                DataBase<ChampRow> main = makeChamp.makeChampMainDB();
-                DataBase<ChampRow> add = addChampRows.add(playin, main); 
+                playin = MakeChamp.makeChampPlayInDB();
+                DataBase<ChampRow> main = MakeChamp.makeChampMainDB();
+                DataBase<ChampRow> add = AddChampRows.add(playin, main); 
                 //add.display();
                 String message = SortChamps.SortTM(add, "WR");
                 event.getChannel().sendMessage(message).queue();

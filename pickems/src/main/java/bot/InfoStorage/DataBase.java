@@ -2,6 +2,8 @@ package bot.InfoStorage;
 
 import java.util.TreeMap;
 
+import bot.InfoStorage.Player.PlayerRow;
+
 public class DataBase<X> {
 
     private TreeMap<String,X> Rows;
@@ -22,6 +24,10 @@ public class DataBase<X> {
         for(String key : Rows.keySet()){
             System.out.println(key + Rows.get(key).toString());
         }
+    }
+
+    public X get(String key) {
+        return this.Rows.get(key);
     }
     
 }

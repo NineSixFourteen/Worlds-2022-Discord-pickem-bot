@@ -7,12 +7,12 @@ import java.util.Collections;
 import bot.InfoStorage.DataBase;
 
 import bot.InfoStorage.Champ.ChampRow;
-import bot.Scarper.ChampScraper.makeChamp;
+import bot.Scarper.ChampScraper.MakeChamp;
 
 public class SortChamps {
 
     public static void main(String[] args) throws IOException {
-        DataBase<ChampRow> db = makeChamp.makeChampMainDB();
+        DataBase<ChampRow> db = MakeChamp.makeChampMainDB();
         Sort(db,"pos");
     }
 

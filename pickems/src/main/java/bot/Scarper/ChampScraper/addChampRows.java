@@ -9,11 +9,11 @@ import bot.InfoStorage.Champ.ChampRow;
 import bot.InfoStorage.Champ.ChampRowBuilder;
 import bot.InfoStorage.QuerySystem.SortChamps;
 
-public class addChampRows {
+public class AddChampRows {
 
     public static void main(String[] args) throws IOException{
-        DataBase<ChampRow> playin = makeChamp.makeChampPlayInDB();
-        DataBase<ChampRow> main = makeChamp.makeChampMainDB();
+        DataBase<ChampRow> playin = MakeChamp.makeChampPlayInDB();
+        DataBase<ChampRow> main = MakeChamp.makeChampMainDB();
         DataBase<ChampRow> add = add(playin, main); 
         SortChamps.Sort(add, "GP");
     }

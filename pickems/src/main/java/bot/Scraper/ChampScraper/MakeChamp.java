@@ -10,16 +10,33 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
 import bot.InfoStorage.DataBase;
+import bot.InfoStorage.Champ.AddChampRows;
 import bot.InfoStorage.Champ.ChampRow;
 import bot.InfoStorage.Champ.ChampRowBuilder;
 
 public class MakeChamp {
 
-    public static DataBase<ChampRow> makeChampDB() throws IOException{
-        return AddChampRows.add(makeChampMainDB(), makeChampPlayInDB());
-
+    public static ArrayList<DataBase<ChampRow>> makeChamps(){
+        try{
+            ArrayList<DataBase<ChampRow>> dbs = new ArrayList<>();
+            DataBase<ChampRow> playin = makeChampPlayInDB();
+            DataBase<ChampRow> main = makeChampMainDB();
+            dbs.add(playin);
+            dbs.add(main);
+            dbs.add(AddChampRows.add(playin, main));
+            return dbs;
+        } catch (Exception e){
+            return new ArrayList<>();
+        }
     }
 
+    public static DataBase<ChampRow> makeChampDB(){
+        try{ 
+            return AddChampRows.add(makeChampMainDB(), makeChampPlayInDB());
+        } catch(Exception e){
+            return new DataBase<>();
+        }
+    }
 
     public static DataBase<ChampRow> makeChampMainDB() throws IOException{
         DataBase<ChampRow> db = new DataBase<>();

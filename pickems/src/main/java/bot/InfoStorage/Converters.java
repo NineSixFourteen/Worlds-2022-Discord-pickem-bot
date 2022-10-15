@@ -24,4 +24,8 @@ public class Converters {
             return Float.parseFloat(mes);
         } 
     }
+
+    public static float toOnePlace(float x){
+        return ((Math.round(x * 10) + 0F) /10);
+    }
 }

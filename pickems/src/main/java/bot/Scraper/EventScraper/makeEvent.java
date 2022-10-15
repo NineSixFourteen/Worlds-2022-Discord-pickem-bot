@@ -8,7 +8,7 @@ import bot.InfoStorage.Event.ChampCalculator;
 import bot.InfoStorage.Event.EventData;
 import bot.Scraper.PlayerScraper.MakePlayer;
 
-public class makeEvent {
+public class MakeEvent {
 
     private static EventScraper es = new EventScraper();
 
@@ -24,17 +24,17 @@ public class makeEvent {
                 String playinL = es.getLongestTime(0);
                 String playinK = es.getMostKills(0);
                 HashMap<String,Integer> playinD = es.getDrake(0);
-                return new EventData(team, getHighest(playinD), playinL, playinK);
+                return new EventData(team, getHighest(playinD), playinL, playinK,es.getDrake(1).get("'Elder'"),playinD);
             case 2:
                 String MainL = es.getLongestTime(1);
                 String MainK = es.getMostKills(1);
                 HashMap<String,Integer> MainD = es.getDrake(1);
-                return new EventData(team, getHighest(MainD), MainL, MainK);
+                return new EventData(team, getHighest(MainD), MainL, MainK,es.getDrake(1).get("'Elder'"),MainD);
             default :
                 String HighestL = compareTime(es.getLongestTime(0), es.getLongestTime(1));
                 String HighestK = compareKill(es.getMostKills(0), es.getMostKills(1));
-                String HighestD = addDrakes(es.getDrake(0), es.getDrake(1));
-                return new EventData(team, HighestD, HighestL, HighestK);
+                HashMap<String,Integer> HighestD = addDrakes(es.getDrake(0), es.getDrake(1));
+                return new EventData(team, getHighest(HighestD), HighestL, HighestK,es.getDrake(1).get("'Elder'"),HighestD);
         }
     }
 
@@ -70,11 +70,11 @@ public class makeEvent {
         return Integer.parseInt(sb.substring(0, 2));
     }
 
-    private static String addDrakes(HashMap<String, Integer> drake, HashMap<String, Integer> drake2) {
+    private static HashMap<String,Integer> addDrakes(HashMap<String, Integer> drake, HashMap<String, Integer> drake2) {
         for(String key : drake2.keySet()){
             drake.put(key, drake.get(key) + drake2.get(key));
         }
-        return getHighest(drake);
+        return drake;
     } 
     
 }

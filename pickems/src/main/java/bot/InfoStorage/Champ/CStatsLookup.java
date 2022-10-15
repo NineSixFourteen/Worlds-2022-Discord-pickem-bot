@@ -10,6 +10,7 @@ public class CStatsLookup {
         champ = row;
     }
 
+    //Float 
     public float lookup(String field){
         int id = 0;
         switch(field.toLowerCase().trim()){
@@ -55,41 +56,41 @@ public class CStatsLookup {
 
     public float lookupID( int num) {
         switch(num){
-            case 1://Precedence
+            case 1:
                 return Converters.removePer(champ.getPresence());
-            case 2://Bans
+            case 2:
                 return champ.getBaned();
-            case 3://Games Played
+            case 3:
                 return champ.getGamesPlayed();
-            case 4://Wins
+            case 4:
                 return champ.getWins();
-            case 5://Loses
+            case 5:
                 return champ.getLoses();
-            case 6://WinRate
+            case 6:
                 return Converters.removePer(champ.getWinRate());
-            case 7://Kills 
+            case 7:
                 return champ.getAvgKills();
-            case 8://Deaths
+            case 8:
                 return champ.getAvgDeaths();
-            case 9://Assists
+            case 9:
                 return champ.getAvgAssists();
-            case 10://Kda
+            case 10:
                 return champ.getKda();
-            case 11://Avg CS
+            case 11:
                 return champ.getAvgCs();
-            case 12://CS Per Minute
+            case 12:
                 return champ.getAvgCs();
-            case 13://Avg Gold
+            case 13:
                 return Converters.removeK(champ.getGold());
-            case 14://Gold Per Minute
+            case 14:
                 return Converters.asFloat(champ.getGPM());
-            case 15://Kill Particpation
+            case 15:
                 return Converters.removePer(champ.getKPar());
-            case 16://Kill Share
+            case 16:
                 return Converters.removePer(champ.getKPar());
-            case 17://Gold Share
+            case 17:
                 return Converters.removePer(champ.getKPar());
-            case 18://Positsions played 
+            case 18:
                 String[] pos = champ.getPosPlayed().split(", ");
                 return pos.length;
             default:
@@ -97,6 +98,5 @@ public class CStatsLookup {
         }
     }
 
-    
-    
+      
 }

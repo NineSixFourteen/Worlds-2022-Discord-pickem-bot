@@ -1,11 +1,9 @@
-package bot.Scraper.ChampScraper;
+package bot.InfoStorage.Champ;
 
 import java.util.HashSet;
 
 import bot.InfoStorage.Converters;
 import bot.InfoStorage.DataBase;
-import bot.InfoStorage.Champ.ChampRow;
-import bot.InfoStorage.Champ.ChampRowBuilder;
 
 public class AddChampRows {
 
@@ -47,9 +45,9 @@ public class AddChampRows {
             (champRow2.getAvgAssists() * champRow2.getGamesPlayed()) + 0F) / gamesPlayed)
          .addKda( getKda(champRow, champRow2, gamesPlayed) )
          .addCS(
-             ((champRow.getAvgCs() * champRow.getGamesPlayed()) + 
-             (champRow2.getAvgCs()) * champRow2.getGamesPlayed() )/ gamesPlayed)
-         .addCSPM( (champRow.getCspm() + champRow2.getCspm() ) / 2 )
+            Converters.toOnePlace(((champRow.getAvgCs() * champRow.getGamesPlayed()) + 
+             (champRow2.getAvgCs()) * champRow2.getGamesPlayed() )/ gamesPlayed))
+         .addCSPM( Converters.toOnePlace((champRow.getCspm() + champRow2.getCspm() ) / 2) ) //TODO this is lazy and wrong
          .addGold(getGold(champRow, champRow2))
          .addGPM(getGoldPM(champRow, champRow2))
          .addKpar( getKillPar(champRow,champRow2))
@@ -64,7 +62,7 @@ public class AddChampRows {
        float mins1 = totalGold1 / Converters.asFloat(champRow.getGPM());
        float totalGold2 = Converters.removeK(champRow2.getGold()) * champRow2.getGamesPlayed();
        float mins2 = totalGold2 / Converters.asFloat(champRow2.getGPM());
-       return ((totalGold1  + totalGold2) / (mins1 + mins2)) + "";
+       return Converters.toOnePlace((totalGold1  + totalGold2) / (mins1 + mins2)) + "";
     }
 
     private static String getPosPlayed(ChampRow row, ChampRow row1) {
@@ -100,7 +98,7 @@ public class AddChampRows {
         gold2 = gold2 * row1.getGamesPlayed();
         float totalPlayIn = (1 / Converters.removePer(row.getGShare()) * 100) * gold1;
         float totalMain = (1 / Converters.removePer(row1.getGShare()) * 100) * gold2;
-        return ((gold1 + gold2) / (totalPlayIn + totalMain) *100) + "%";
+        return Converters.toOnePlace((gold1 + gold2) / (totalPlayIn + totalMain) *100) + "%";
     }
 
     private static String getKillPar(ChampRow row, ChampRow row1) {
@@ -108,7 +106,7 @@ public class AddChampRows {
         float kill2 = (row1.getAvgKills() * row1.getGamesPlayed()) + (row1.getAvgAssists() * row1.getGamesPlayed());
         float totalPlayIn = (1 / Converters.removePer(row.getKPar()) * 100) * kill1;
         float totalMain = (1 / Converters.removePer(row1.getKPar()) * 100) * kill2;
-        return ((kill1 + kill2) / (totalPlayIn + totalMain) * 100) + "%";
+        return Converters.toOnePlace((kill1 + kill2) / (totalPlayIn + totalMain) * 100) + "%";
     }
 
     private static String getKillShare(ChampRow row, ChampRow row1) {
@@ -116,7 +114,7 @@ public class AddChampRows {
         float kill2 = row1.getAvgKills() * row1.getGamesPlayed(); 
         float totalPlayIn = (1 / Converters.removePer(row.getKShare()) *100) * kill1;
         float totalMain = (1 / Converters.removePer(row1.getKShare()) *100) * kill2;
-        return ((kill1 + kill2) / (totalPlayIn + totalMain) *100) + "%";
+        return Converters.toOnePlace((kill1 + kill2) / (totalPlayIn + totalMain) *100) + "%";
     }
 
     private static float getTotalGames(ChampRow row, ChampRow row1){
@@ -147,7 +145,7 @@ public class AddChampRows {
         int wins  = row.getWins() + row1.getWins() ;
         int totalGames = row.getGamesPlayed() + row1.getGamesPlayed();
         if(totalGames != 0 ){
-            return ((Converters.asFloat(wins+ "") / totalGames) *100) + "%";
+            return Converters.toOnePlace((Converters.asFloat(wins+ "") / totalGames) *100) + "%";
         } else{
             return "0%";
         }
@@ -167,7 +165,7 @@ public class AddChampRows {
     private static String getGold(ChampRow row, ChampRow row1){
         float gold1 = !row.getGold().equals("-") ?Float.parseFloat(row.getGold().substring(0, row.getGold().length() -1)) : 0; ;
         float gold2 = !row1.getGold().equals("-") ? Float.parseFloat(row1.getGold().substring(0, row1.getGold().length() -1)) : 0; 
-        return ((gold1 + gold2)/2) + "k";
+        return Converters.toOnePlace((gold1 + gold2)/2) + "k";
 
     }
     

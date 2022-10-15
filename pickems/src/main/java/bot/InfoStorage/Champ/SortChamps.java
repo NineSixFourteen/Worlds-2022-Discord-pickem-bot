@@ -1,12 +1,11 @@
-package bot.InfoStorage.QuerySystem;
+package bot.InfoStorage.Champ;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import bot.InfoStorage.DataBase;
-
-import bot.InfoStorage.Champ.ChampRow;
+import bot.InfoStorage.Pair;
 import bot.Scraper.ChampScraper.MakeChamp;
 
 public class SortChamps {
@@ -30,7 +29,6 @@ public class SortChamps {
             System.out.println(pair.getID() + " | " + pair.getValue());
         }
     }
-
     
     public static void Sort(DataBase<ChampRow> champs,String mes){
         ArrayList<Pair> pairs = new ArrayList<>();
@@ -47,24 +45,24 @@ public class SortChamps {
         }
     }
 
-    public static String SortTR(DataBase<ChampRow> champs,String mes){
+    public static ArrayList<String> SortTotal(DataBase<ChampRow> champs,String mes){
         ArrayList<Pair> pairs = new ArrayList<>();
         for(String key : champs.getRows().keySet()){
             pairs.add(
                 new Pair(
                     key, 
-                    champs.getRows().get(key).lookup(mes)
+                    champs.get(key).getGamesPlayed() > 0 ? champs.getRows().get(key).lookup(mes) * champs.getRows().get(key).lookup("gp") : 0
                 ));
         }
         Collections.sort(pairs);
-        String message = "";
+        ArrayList<String> order = new ArrayList<>();
         for(Pair pair : pairs){
-            message += pair.getID() + " | " + pair.getValue() + "\n";
+            order.add(pair.getID());
         }
-        return message;
+        return order;
     }
 
-    public static String SortTM(DataBase<ChampRow> champs,String mes){
+    public static ArrayList<String> SortToList(DataBase<ChampRow> champs, String mes){
         ArrayList<Pair> pairs = new ArrayList<>();
         for(String key : champs.getRows().keySet()){
             pairs.add(
@@ -74,31 +72,12 @@ public class SortChamps {
                 ));
         }
         Collections.sort(pairs);
-        String message = "";
+        ArrayList<String> names = new ArrayList<>();
         for(Pair pair : pairs){
-            message += pair.getID() + " | " + pair.getValue() + "\n";
+            names.add(pair.getID());
         }
-        return message;
+        return names;
     }
 
-    public static String[][] SortTL(DataBase<ChampRow> champs, String mes) {
-        ArrayList<Pair> pairs = new ArrayList<>();
-        for(String key : champs.getRows().keySet()){
-            pairs.add(
-                new Pair(
-                    key, 
-                    champs.getRows().get(key).lookup(mes)
-                ));
-        }
-        Collections.sort(pairs);
-        String[][] arr = new String[2][pairs.size()];
-        for(int i = 0;i <pairs.size();i++){
-            arr[0][i] = pairs.get(i).getID();
-            arr[1][i] = pairs.get(i).getValue() + "";
-        }
-        return arr;
-        
-        
-    }
-
+    
 }

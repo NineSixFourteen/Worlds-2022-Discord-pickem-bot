@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import bot.InfoStorage.DataBase;
+import bot.InfoStorage.Player.AddPlayerRow;
 import bot.InfoStorage.Player.PlayerRow;
 import bot.InfoStorage.Player.PlayerRowBuilder;
 

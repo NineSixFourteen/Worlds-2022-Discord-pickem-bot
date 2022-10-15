@@ -1,23 +1,16 @@
 package bot;
 
-import java.io.IOException;
+import bot.InfoStorage.Champ.FilterChamp;
+import bot.InfoStorage.Query.Comparisson;
+import bot.Scraper.ChampScraper.MakeChamp;
 
-import bot.Scraper.EventScraper.makeEvent;
-import bot.Scraper.PlayerScraper.MakePlayer;
+public class App {
 
-public class App 
-{
-    public static void main( String[] args ) throws IOException
-    {
-        /* 
-        String look = "k";
-        TextTable tt = new TextTable(
-           new String[]{"player",look},
-           SortChamps.SortTL(MakeChamp.makeChampDB() ,"k")
-           );
-           tt.printTable();                                                    
-           */
-        //System.out.println("Ming: " + MakePlayer.getPlayers().get(2).get("Ming").toString());
-        System.out.println(makeEvent.getMatchData(3));
+    public static void main(String[] args) {
+        FilterChamp.filterChampsNum(
+            "gp", MakeChamp.makeChampDB(), 
+            5,
+            Comparisson.GreaterThan
+        ).display();
     }
 }

@@ -1,5 +1,7 @@
 package bot.InfoStorage.Event;
 
+import java.util.HashMap;
+
 public class EventData {
     
     private String WorldsWinner = "Unknown";
@@ -11,14 +13,54 @@ public class EventData {
     private int HowManyReverse = 0;
     private int HowManyPentas = 2;
     private String LongestGameTime;
-    private int HowManyBaronSteals = 5;   
-    private String MostDrakes; 
+    private int HowManyBaronSteals = 5; 
+    HashMap<String, Integer> drakes;   
+    private String MostDrakes;
+    private int NumberOfElders; 
 
-    public EventData(String team, String drakes,String gametime, String kills){
+    public String getTitle(int num){
+        switch(num){
+            case 0: return "Worlds Winner";
+            case 1: return "Group A Winner";
+            case 2: return "Group B Winner";
+            case 3: return "Most Kills";
+            case 4: return "Team With Most Champs";
+            case 5: return "Less Than 2 Seeds";
+            case 6: return "Reverse Sweeps";
+            case 7: return "Number of Pentas"; 
+            case 8: return "Longest Game";
+            case 9: return "How Many Baron Steals";
+            case 10: return "Most Drakes";
+            case 11: return "Elder Drakes";
+            default: return "not a field";
+        }
+    } 
+    
+    public String getValue(int num){
+        switch(num){
+            case 0: return this.WorldsWinner;
+            case 1: return this.GroupAWinner;
+            case 2: return this.getGroupBWinner();
+            case 3: return this.MostKills;
+            case 4: return this.TeamWithMostUniqueChamps;
+            case 5: return this.LessThan2Seeds;
+            case 6: return this.HowManyReverse + "";
+            case 7: return this.HowManyPentas  +""; 
+            case 8: return this.LongestGameTime;
+            case 9: return this.HowManyBaronSteals + "";
+            case 10: return this.MostDrakes;
+            case 11: return this.NumberOfElders + "";
+            default: return "not a field";
+        }
+    }
+
+    public EventData(String team, String drakes,String gametime, String kills,int elder, HashMap<String, Integer> drks){
         this.TeamWithMostUniqueChamps = team;
         this.MostDrakes = drakes;
         this.MostKills = kills;
+        this.drakes = drks;
         this.LongestGameTime = gametime;
+        this.NumberOfElders = elder;
     }
 
     public String getWorldsWinner() {
@@ -63,6 +105,10 @@ public class EventData {
 
     public String getMostDrakes() {
         return MostDrakes;
+    }
+
+    public HashMap<String, Integer> getDrakes() {
+        return drakes;
     }
 
     @Override

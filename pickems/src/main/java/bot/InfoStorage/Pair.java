@@ -1,4 +1,4 @@
-package bot.InfoStorage.QuerySystem;
+package bot.InfoStorage;
 
 public class Pair implements Comparable<Pair> {
 

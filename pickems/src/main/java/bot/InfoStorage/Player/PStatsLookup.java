@@ -45,6 +45,8 @@ public class PStatsLookup {
                 id = 15;
             case "pos" : case "posistion":
                 id = 16;
+            case "fb":
+                id = 17;
         }
         return lookupID(id);
     }
@@ -92,6 +94,8 @@ public class PStatsLookup {
                     case "Support": return 5;
                     default : return 0;
                 }
+            case 17: 
+                return player.getFirstBlood();
             default:
                 throw new Error("ID bad for players"); 
         }

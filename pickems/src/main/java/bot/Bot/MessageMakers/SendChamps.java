@@ -50,10 +50,16 @@ public class SendChamps {
             }
             if(get != -1){
                 String name = args[get].split("-")[1]; 
+                String Cname = name.toUpperCase();
+                name = Cname.charAt(0) + name.toLowerCase().substring(1);
+                System.out.println(name);
                 ChampRow row = db.get(name);
                 String message = displayRow(row, nums);
+                EmbedBuilder em = new EmbedBuilder();
+                em.setColor(Color.MAGENTA);
+                em.addField(name,message,false);
                 if(message != null){
-                    event.getChannel().sendMessage(message).queue();
+                    event.getChannel().sendMessageEmbeds(em.build()).queue();
                 }
                 return;
             }
@@ -166,7 +172,7 @@ public class SendChamps {
             case 16: return "> Kill Share      - " + cr.getKPar()         + "\n";
             case 17: return "> Gold Share      - " + cr.getKShare()       + "\n";
             case 18: return "> Postions Played - " + cr.getPosPlayed().split(", ").length + "\n";
-            default: throw new Error("Unknown stat numebr");
+            default: return ">Not a feild  - " + "there is 18 fields";
         }
     }
     

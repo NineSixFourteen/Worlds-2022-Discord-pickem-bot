@@ -107,7 +107,7 @@ public class SendPlayerStats {
         mes.addField("Pentas ", "> Upset\n> Shogun", false);
         temp = SortPlayer.SortToList(players, 17);
         mes.addField("First Bloods ", "> " + temp.get(0) + " - " + players.get(temp.get(0)).getFirstBlood(), false);
-        mes.addField("Most Kill ", "> Gala - 16", false);
+        mes.addField("Most Kill ", "> Shogun - 16", false);
         channel.sendMessageEmbeds(mes.build()).queue();
     }
 

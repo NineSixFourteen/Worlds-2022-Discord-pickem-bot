@@ -34,7 +34,7 @@ public class PlayerInfoScraper {
                     json.get("role").toString())
                 );
           }
-          //Adding players not in the datadump TODO add names
+          //Adding players not in the datadump
           //Players Missing in the database that can change
           pInfo.put("kati",new PlayerInfo(0,"", "GAM","MID"));
           pInfo.put("shunn",new PlayerInfo(0, "","CTBC Flying Oyster","ADC"));

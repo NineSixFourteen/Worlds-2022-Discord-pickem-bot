@@ -50,6 +50,10 @@ public class CStatsLookup {
                 id = 17;break; 
             case "pos": case "positions played":
                 id = 18;break; 
+            case "total kills": case "tk":
+                id = 19;break;
+            case "total deaths": case "td":
+                id = 20;
         }
         return lookupID(id);
     }
@@ -93,6 +97,10 @@ public class CStatsLookup {
             case 18:
                 String[] pos = champ.getPosPlayed().split(", ");
                 return pos.length;
+            case 19: 
+                return champ.getTotalKills();
+            case 20:
+                return champ.getTotalDeath();
             default:
                 throw new Error("Unknown stat numebr");
         }

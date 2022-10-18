@@ -132,6 +132,13 @@ public class ChampRow{
         PosPlayed = posPlayed;
     }
 
+    public int getTotalKills(){
+        return Math.round(this.AvgKills * this.GamesPlayed);
+    }
+    public int getTotalDeath(){
+        return Math.round(this.AvgDeaths * this.GamesPlayed);
+    }
+
     //Other Functions :)
 
     public float lookup(String Field){

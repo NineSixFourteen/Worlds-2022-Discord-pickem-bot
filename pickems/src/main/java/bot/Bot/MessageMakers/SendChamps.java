@@ -10,9 +10,11 @@ import bot.InfoStorage.DataBase;
 import bot.InfoStorage.Champ.ChampRow;
 import bot.InfoStorage.Champ.FilterChamp;
 import bot.InfoStorage.Champ.SortChamps;
+import bot.InfoStorage.Query.Comparisson;
 import bot.InfoStorage.Query.QueryHelper;
 import bot.Scraper.ChampScraper.MakeChamp;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -20,6 +22,57 @@ public class SendChamps {
 
     private static DataBase<ChampRow> db = MakeChamp.makeChampDB();
 
+    public static void SendChampData(MessageChannel channel, String[] args){
+        int max = 20;
+        ArrayList<String> order = new ArrayList<>();
+        int[] nums = new int[]{7,8,10,6,3,2,1,18};
+        if(args[3].length() != 0){;
+            ChampRow row = db.get(args[3]);
+            String message = displayRow(row, nums);
+            EmbedBuilder em = new EmbedBuilder();
+            em.setColor(Color.MAGENTA);
+            em.addField(args[3],message,false);
+            if(message != null){
+                channel.sendMessageEmbeds(em.build()).queue();
+            }
+            return;
+        }
+        if(args[4].length() != 0 && args[1].length() != 0){
+            String list = args[4]; 
+            String[] items = list.split(",");
+            Comparisson comp = QueryHelper.get(items[1]);
+            order = FilterChamp.filterThenSort(args[1], db, Integer.parseInt(items[2]), comp, items[0]);
+        } else if (args[4].length() != 0 && args[1].length() == 0){
+            String list = args[4]; 
+            String[] items = list.split(",");
+            Comparisson comp = QueryHelper.get(items[1]);
+            order = FilterChamp.filterChampsNumTL(items[0], db, Integer.parseInt(items[2]), comp);
+        } else if(args[1].length() != 0 && args[4].length() != 0){
+            order = SortChamps.SortToList(db, args[1]); 
+        }
+        if(args[0].length() != 0){
+                max = args[0].equals("F&L") ? 200 : Integer.parseInt(args[0]); 
+        }
+        if(args[2].length() != 0 ){
+            if(args[2].toLowerCase().equals("all")){
+                nums = new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+            } else {
+                String[] items = args[2].split(",");
+                nums = new int[items.length];
+                int i = 0; 
+                for(String item: items){
+                    nums[i++] = Integer.parseInt(item);
+                }
+            }
+        }
+        BotHelper.sendMessages(
+            getChamps(
+                order,
+                max,
+                nums,db
+        ),channel);
+    }
+        
     public static void SendChampsData(MessageReceivedEvent event, String[] args){
         if(args.length == 2 && args[1].equals("r")){
             db = MakeChamp.makeChampDB();
@@ -41,18 +94,19 @@ public class SendChamps {
             }
             if(show != -1){
                 String list = args[show].split("-")[1]; 
-                String[] items = list.split(",");
-                nums = new int[items.length];
-                int i = 0; 
-                for(String item: items){
-                    nums[i++] = Integer.parseInt(item.replace(" ", ""));
+                if(list.toLowerCase().equals("all")){
+                    nums = new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+                } else {
+                    String[] items = list.split(",");
+                    nums = new int[items.length];
+                    int i = 0; 
+                    for(String item: items){
+                        nums[i++] = Integer.parseInt(item.replace(" ", ""));
+                    }
                 }
             }
             if(get != -1){
-                String name = args[get].split("-")[1]; 
-                String Cname = name.toUpperCase();
-                name = Cname.charAt(0) + name.toLowerCase().substring(1);
-                System.out.println(name);
+                String name = args[get].split("-")[1].replace("_", " ");
                 ChampRow row = db.get(name);
                 String message = displayRow(row, nums);
                 EmbedBuilder em = new EmbedBuilder();
@@ -77,7 +131,6 @@ public class SendChamps {
                     if(message != null ){
                         event.getChannel().sendMessage(message).queueAfter(2, TimeUnit.SECONDS);
                     }
-    
                 }
             } else {
                 BotHelper.sendMessages(
@@ -89,6 +142,7 @@ public class SendChamps {
             }
         }
     }
+
     private static ArrayList<MessageEmbed> getChamps(ArrayList<String> champOrder, int max,int[] show,DataBase<ChampRow> data) {
         //If no list given use default order
         if(champOrder.size() == 0){
@@ -169,10 +223,12 @@ public class SendChamps {
             case 13: return "> Gold            - " + cr.getGold()         + "\n";
             case 14: return "> Gold per minute - " + cr.getGPM()          + "\n";
             case 15: return "> Kill Partic..   - " + cr.getKPar()         + "\n";
-            case 16: return "> Kill Share      - " + cr.getKPar()         + "\n";
+            case 16: return "> Kill Share      - " + cr.getKShare()         + "\n";
             case 17: return "> Gold Share      - " + cr.getKShare()       + "\n";
             case 18: return "> Postions Played - " + cr.getPosPlayed().split(", ").length + "\n";
-            default: return ">Not a feild  - " + "there is 18 fields";
+            case 19: return "> Total Kills     - " + Math.round(cr.getTotalKills()) + "\n";
+            case 20: return "> Total Deaths    - " + Math.round(cr.getTotalDeath()) + "\n";
+            default: return ">Not a feild  - " + "there is 20 fields";
         }
     }
     

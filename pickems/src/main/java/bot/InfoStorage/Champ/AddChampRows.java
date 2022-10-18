@@ -47,7 +47,7 @@ public class AddChampRows {
          .addCS(
             Converters.toOnePlace(((champRow.getAvgCs() * champRow.getGamesPlayed()) + 
              (champRow2.getAvgCs()) * champRow2.getGamesPlayed() )/ gamesPlayed))
-         .addCSPM( Converters.toOnePlace((champRow.getCspm() + champRow2.getCspm() ) / 2) ) //TODO this is lazy and wrong
+         .addCSPM( Converters.toOnePlace((champRow.getCspm() + champRow2.getCspm() ) / 2) )
          .addGold(getGold(champRow, champRow2))
          .addGPM(getGoldPM(champRow, champRow2))
          .addKpar( getKillPar(champRow,champRow2))

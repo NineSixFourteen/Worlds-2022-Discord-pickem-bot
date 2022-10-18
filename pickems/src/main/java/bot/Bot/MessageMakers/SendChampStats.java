@@ -20,7 +20,7 @@ public class SendChampStats {
 
     public static void SendKills(MessageChannel channel){
         EmbedBuilder mes = new EmbedBuilder();
-        ArrayList<String> order = SortChamps.SortTotal(data.get(2), "kills");
+        ArrayList<String> order = SortChamps.SortToList(data.get(2), "tk");
         mes.setColor(Color.MAGENTA);
         mes.setTitle("Kills LeaderBoard");
         for(int i = 0; i < 12;i++){
@@ -32,7 +32,7 @@ public class SendChampStats {
 
     public static void SendDeaths(MessageChannel channel){
         EmbedBuilder mes = new EmbedBuilder();
-        ArrayList<String> order = SortChamps.SortTotal(data.get(2), "deaths");
+        ArrayList<String> order = SortChamps.SortToList(data.get(2), "td");
         mes.setColor(Color.MAGENTA);
         mes.setTitle("Death LeaderBoard");
         for(int i = 0; i < 12;i++){
@@ -90,15 +90,25 @@ public class SendChampStats {
         channel.sendMessageEmbeds(mes.build()).queue();
     }
 
+    public static void SendTotal(MessageChannel channel) {
+        EmbedBuilder em = new EmbedBuilder();
+        em.setColor(Color.MAGENTA);
+        em.setTitle("Number of Unique Champs - "
+                    + data.get(2).getRows().size()
+                    + "\nNumber of Unique Champs Played - "
+                    + FilterChamp.filterChampsNumTL("gp", data.get(2), 0, Comparisson.GreaterThan).size());
+        channel.sendMessageEmbeds(em.build()).queue();
+    }
+
     public static void SendTop(MessageChannel channel) {
         EmbedBuilder mes = new EmbedBuilder();
         mes.setTitle("Champion Stats");
         mes.setColor(Color.MAGENTA);
-        ArrayList<String> temp = SortChamps.SortTotal(data.get(2), "k");
+        ArrayList<String> temp = SortChamps.SortToList(data.get(2), "tk");
         mes.addField("Top Kills: ","> " +   temp.get(0) + " - " + 
             Math.round(data.get(2).get(temp.get(0)).getGamesPlayed() * 
              data.get(2).get(temp.get(0)).getAvgKills()     )  + " kills",false);
-        temp = SortChamps.SortTotal(data.get(2), "d");
+        temp = SortChamps.SortToList(data.get(2), "td");
         mes.addField("Top Deaths: ", "> " +  temp.get(0) + " - " + 
             Math.round(data.get(2).get(temp.get(0)).getGamesPlayed() * 
             data.get(2).get(temp.get(0)).getAvgDeaths()     )  + " deaths",false);
@@ -109,13 +119,13 @@ public class SendChampStats {
             Comparisson.GTEqualTo,
             "gp");
         mes.addField("Top WR > 5: ","> " +  temp.get(0) + " - " + data.get(2).get(temp.get(0)).getWinRate() ,false);
-        temp = SortChamps.SortTotal(data.get(2), "gp");
+        temp = SortChamps.SortToList(data.get(2), "p");
         mes.addField("Top Picked: ", "> " + temp.get(0) + " - " + 
         (data.get(2).get(temp.get(0)).getGamesPlayed()) + " Games",false);
-        temp = SortChamps.SortTotal(data.get(2), "b");
+        temp = SortChamps.SortToList(data.get(2), "b");
         mes.addField("Top Banned: ","> " +  temp.get(0) + " - " + 
         (data.get(2).get(temp.get(0)).getBaned()) + " Games",false);
-        temp = SortChamps.SortTotal(data.get(2), "pos");
+        temp = SortChamps.SortToList(data.get(2), "pos");
         mes.addField("Most Positions: ","> " +  temp.get(0) + " - " + 
         (data.get(2).get(temp.get(0)).getPosPlayed().split(",").length) + " Postions Played",false);
         channel.sendMessageEmbeds(mes.build()).queue();
@@ -198,5 +208,11 @@ public class SendChampStats {
                          champ.getGamesPlayed()}; //2
         return fmt.format(args);
     }
+
+    public static void reset() {
+        data = MakeChamp.makeChamps();
+    }
+
+
 
 }

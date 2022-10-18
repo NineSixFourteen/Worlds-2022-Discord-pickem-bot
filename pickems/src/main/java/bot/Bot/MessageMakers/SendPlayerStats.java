@@ -111,7 +111,6 @@ public class SendPlayerStats {
         channel.sendMessageEmbeds(mes.build()).queue();
     }
 
-
     //Formaters
     private static String getKDAInfo(PlayerRow player) {
         MessageFormat fmt = new MessageFormat(
@@ -130,7 +129,7 @@ public class SendPlayerStats {
     private static String getFirstBloodInfo(PlayerRow player) {
         MessageFormat fmt = new MessageFormat(
             """
-             > Firs Bloods  - {0}
+             > First Bloods  - {0}
              > Games Played - {1} 
              > Total Kills  -  {2}    
             """
@@ -182,6 +181,10 @@ public class SendPlayerStats {
                          player.getGamesPlayed(),  //1
                          player.getWinRate()}; //2
         return fmt.format(args);
+    }
+
+    public static void reset() {
+        players = MakePlayer.getPlayers().get(2);
     }
     
 }

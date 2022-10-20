@@ -44,7 +44,7 @@ public class SendChamps {
             order = FilterChamp.filterThenSort(args[1], db, Integer.parseInt(items[2]), comp, items[0]);
         } else if (args[4].length() != 0 && args[1].length() == 0){
             String list = args[4]; 
-            String[] items = list.split(",");
+            String[] items = list.split(" ");
             Comparisson comp = QueryHelper.get(items[1]);
             order = FilterChamp.filterChampsNumTL(items[0], db, Integer.parseInt(items[2]), comp);
         } else if(args[1].length() != 0 && args[4].length() != 0){

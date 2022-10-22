@@ -16,6 +16,11 @@ import bot.InfoStorage.Champ.ChampRowBuilder;
 
 public class MakeChamp {
 
+    public static void main(String[] args) throws IOException {
+        DataBase<ChampRow> playin = makeChampPlayInDB();
+        playin.display();
+    }
+
     public static ArrayList<DataBase<ChampRow>> makeChamps(){
         try{
             ArrayList<DataBase<ChampRow>> dbs = new ArrayList<>();
@@ -102,7 +107,7 @@ public class MakeChamp {
         }
         addElem(info, 17, 20, nodes);
         String pos = " "; 
-        for(Node node : nodes.get(20).childNodes()){
+        for(Node node : nodes.get(22).childNodes()){
             try{
                 pos += node.childNode(0).attributes().get("title") + ", ";
             } catch(Exception e){}

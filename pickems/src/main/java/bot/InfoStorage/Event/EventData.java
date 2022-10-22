@@ -13,7 +13,7 @@ public class EventData {
     private int HowManyReverse = 0;
     private int HowManyPentas = 2;
     private String LongestGameTime;
-    private int HowManyBaronSteals = 5; 
+    private int HowManyBaronSteals = 6; 
     HashMap<String, Integer> drakes;   
     private String MostDrakes;
     private int NumberOfElders; 

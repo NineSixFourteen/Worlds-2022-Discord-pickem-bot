@@ -171,10 +171,15 @@ public class SendChampStats {
             """
         );
         String posPlayedNice = "";
+        System.out.println(champ.getPosPlayed());
         for(String pos : champ.getPosPlayed().split(",")){
-            posPlayedNice += pos.replace(",", "").split(" ")[1] + ", ";
+            try{
+                posPlayedNice += pos.replace(",", "").split(" ")[1] + ", ";}
+                catch(Exception e){}
         }
-        posPlayedNice = posPlayedNice.substring(0,posPlayedNice.length()-2);
+        if(posPlayedNice.length() > 2){
+            posPlayedNice = posPlayedNice.substring(0,posPlayedNice.length()-2);
+        }
         Object[] args = {champ.getPosPlayed().split(",").length,  //0
                          posPlayedNice, //1
                          champ.getGamesPlayed()}; //2
